@@ -27,3 +27,36 @@ questions = [
 question = random.choice(questions)
 
 print("Practice Question:", question)
+
+
+
+
+
+#python-assignment2.py
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+url = "https://books.toscrape.com/"
+
+response = requests.get(url)
+
+soup = BeautifulSoup(response.text, "html.parser")
+
+books = soup.find_all("h3")
+
+titles = []
+
+for book in books:
+    title = book.text
+    titles.append(title)
+
+print(titles)
+
+data = pd.DataFrame({
+    "Book Titles": titles
+})
+
+data.to_csv("books.csv", index=False)
+
+print("Data saved to books.csv")
